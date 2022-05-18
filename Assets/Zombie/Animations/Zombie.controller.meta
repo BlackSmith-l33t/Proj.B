@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Zombie/Animations/Zombie.controller.meta
 guid: 2ef8e6599b7f9934e8ff0d64c5325a1f
+========
+guid: defb030d95b502c4382067e80afeb7fa
+>>>>>>>> 465239db7d65e18e81a161daadc23314ff20047e:Assets/Scenes/Pit/NavMesh.asset.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 9100000
+  mainObjectFileID: 23800000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
