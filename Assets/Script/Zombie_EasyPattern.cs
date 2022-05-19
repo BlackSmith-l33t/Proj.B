@@ -34,9 +34,17 @@ public class Zombie_EasyPattern : MonoBehaviour
                 anin.SetBool("isTrace", isRange);
                 GetComponent<NavMeshAgent>().enabled = true;
                 destination = target.position;
-                agent.destination = destination;
+                agent.destination = destination;                
             }
+            //else if (isAttackRange)
+            //{
+            //    isRange = false;
+            //    anin.SetBool("isTrace", isRange);
 
+            //    GetComponent<NavMeshAgent>().enabled = false;
+            //    anin.SetBool("isAttack", isAttackRange);               
+            //}          
+         
             // 다른 방법
             //if (Vector3.Distance(destination, target.position) > 1.0f)
             //{
@@ -45,6 +53,18 @@ public class Zombie_EasyPattern : MonoBehaviour
             //}
 
         }
+    }
+
+    IEnumerator CheckAttack()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        if (GetComponent<SphereCollider>().isTrigger)
+        {
+            //isAttackRange = true;
+            anin.SetTrigger("Attacking");
+        }
+
     }
 
     private void Awake()
@@ -61,18 +81,19 @@ public class Zombie_EasyPattern : MonoBehaviour
         anin.SetBool("isTrace", isRange);        
 
         StartCoroutine(CheckRange());
+        StartCoroutine(CheckAttack());
     }
 
     private void FixedUpdate()
     {
         RaycastHit forwardRange;
         RaycastHit backRange;
-        RaycastHit attackRange;        
+        RaycastHit attackRange;    
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0f, 1.5f, 10f)), out forwardRange, 10f, LayerMask.GetMask("Player")))
         {
             Debug.DrawRay(transform.position, Vector3.forward, new Color(1, 0, 0));            
-            isRange = true;            
+            isRange = true;          
             Debug.Log("Hit Player");     
         }
         else if (Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0f, 1.5f, 5f)), out forwardRange, 2f, LayerMask.GetMask("Default")))
@@ -93,14 +114,13 @@ public class Zombie_EasyPattern : MonoBehaviour
             //rigid.AddForce(new Vector3(0f, 0f, m_fDir), ForceMode.Impulse);                  
         }
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0f, 1.5f, 3f)), out attackRange, 3f, LayerMask.GetMask("Player")))
-        {
-            Debug.DrawRay(transform.position, Vector3.forward, Color.yellow);
-            isRange = false;
-            isAttackRange = true;
-            anin.SetBool("isAttack", isAttackRange);
-            Debug.Log("Attack!");
-        }
+        //if (Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0f, 1.5f, 2f)), out attackRange, 1f, LayerMask.GetMask("Player")))
+        //{
+        //    Debug.DrawRay(transform.position, Vector3.forward, Color.yellow);        
+        //    isAttackRange = true;                    
+        //    Debug.Log("Attack!");         
+        //}
+
 
         // TODO : 뒤통수에 센서
         //if (Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0f, 1.5f, 20f)), out back, 10f, LayerMask.GetMask("Player")))
@@ -119,10 +139,7 @@ public class Zombie_EasyPattern : MonoBehaviour
     {
         //transform.TransformDirection(Vector3.forward);
 
-
         //transform.Rotate(Vector3.up, 90); => 휠윈드 가능함
-
-
        
         // 감지 범위
         // 공격 발동 범위
