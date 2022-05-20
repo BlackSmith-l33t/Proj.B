@@ -76,7 +76,7 @@ public class Zombie_HardPattern : MonoBehaviour
         {
             Debug.DrawRay(transform.position, Vector3.forward, new Color(1, 0, 0));
             isRange = true;
-            Debug.Log("Hit Player");
+            //Debug.Log("Hit Player");
         }
         else if (Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0f, 1.5f, 5f)), out forwardRange, 2f, LayerMask.GetMask("Default")))
         {
@@ -84,13 +84,13 @@ public class Zombie_HardPattern : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(0f, 180f, 0f);
 
             transform.Rotate(new Vector3(0, -180f, 0));                     
-            Debug.Log("Hit Wall");
+            //Debug.Log("Hit Wall");
         }
         else
         {                  
             Debug.DrawRay(transform.position, transform.TransformDirection(new Vector3(0f, 1.5f, 10f)), new Color(0, 1, 0));
             transform.Translate(0f, 0f, 0.6f * Time.deltaTime);
-            Debug.Log("Move");
+            //Debug.Log("Move");
         }
     }
 }
