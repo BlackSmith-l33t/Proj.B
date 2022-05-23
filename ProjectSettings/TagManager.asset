@@ -50,8 +50,8 @@ TagManager:
   - BlockAIRayCast
   - Pushable
   - CoverPoint
-  - Box
-  - 
+  - BombBox
+  - Item
   - 
   - 
   - 
