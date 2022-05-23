@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Invector.vCharacterController;
@@ -15,71 +14,38 @@ public class GameManager : MonoBehaviour
     public vThirdPersonCamera mainCamera;
     public vRagdoll deathMotion;
 
-    float fadeTime = 5.0f; // fade 효과 재생시간
-    float start;
-    float end;
-    float time = 0.0f;
-
-    bool isPlaying = false;
-
     private void Awake()
-    {        
+    {
         player.OnDie += Death;
     }
 
-    IEnumerator StartFadeIn()
+    IEnumerator StartFadeInOut()
     {
         yield return new WaitForSeconds(4.0f);
 
-        //if (player.isAlive)
-        //{
-        //    yield return null;
-        //}
-
-        isPlaying = true;        
-
         Color fadeColor = fadeOutImage.color;
-        time = 0.0f;        
-        fadeColor.a = Mathf.Lerp(start, end, time);
 
-        while (fadeColor.a > 0.0f)
+        for (int i = 0; i < 100; i++)
         {
-            time += Time.deltaTime / fadeTime;
-            fadeColor.a = Mathf.Lerp(start, end, time);
+            float f = i / 100.0f;
+            fadeColor.a = f + 0.5f;
             fadeOutImage.color = fadeColor;
-            yield return null;
+            yield return new WaitForSeconds(0.01f);
         }
 
-        isPlaying = false;
-        Restart();
-    }  
-
-    public void Restart()
-    {
-        SceneManager.LoadScene("Pit");        
+        yield return new WaitForSeconds(5.0f);
+        SceneManager.LoadScene("Pit");
     }
 
     private void Death()
-    {
+    {        
         deathMotion.ActivateRagdoll();
         deathUI.SetActive(true);
         mainCamera.GetComponentInChildren<GraySceleEffect>().enabled = true;
         mainCamera.GetComponentInChildren<vThirdPersonCamera>().isFreezed = true;
 
-        Debug.Log("fade out 호출");
-        // TODO :흑백 화면 -> UI 표시 -> fade out -> ReStart() 호출
-        FadeIn();
+        Debug.Log("fade out 호출");       
+        StartCoroutine("StartFadeInOut");
     }
-
-    public void FadeIn()
-    {
-        if (true == isPlaying) // 중복 재생 방지
-        {
-            return;
-        }
-        start = 5.0f;
-        end = 0.0f;
-
-        StartCoroutine("StartFadeIn");
-    }
+ 
 }
