@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public Player player;
+    public Prisoner prisoner;
     public GameObject deathUI;
     public GameObject startPoint;
     public Image fadeOutImage;
@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        player.OnDie += Death;
+        prisoner.OnDie += Death;
     }
 
     IEnumerator StartFadeInOut()
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(3.0f);
         SceneManager.LoadScene("Pit");
     }
 

@@ -6,7 +6,9 @@ using UnityEngine.Events;
 
 public class Zombie_HardPattern : MonoBehaviour
 {
-    public Transform target;
+    [SerializeField]
+    Transform target;
+
     public GameObject zombie;   
 
     float m_fDir = 0.5f;
@@ -16,15 +18,11 @@ public class Zombie_HardPattern : MonoBehaviour
 
     Vector3 direction;
     Vector3 destination;
-    NavMeshAgent agent;
-    Transform targetTransform;
+    NavMeshAgent agent;  
 
     bool isDead = false;
     bool isRange = false;
-    bool isAttacked = false;
    
-
-    Rigidbody rigid;    
     Animator anin;
     HitPointSet hitPointSet;
 
@@ -49,12 +47,12 @@ public class Zombie_HardPattern : MonoBehaviour
         }
     }
     private void Awake()
-    {
-        rigid = GetComponent<Rigidbody>();
+    {      
         anin = GetComponent<Animator>();
         hitPointSet = GetComponentInChildren<HitPointSet>();
         hitPointSet.OnZombieDead.AddListener(Dead);
-     }
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     private void Start()
     {

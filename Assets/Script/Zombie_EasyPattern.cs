@@ -4,25 +4,17 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class Zombie_EasyPattern : MonoBehaviour
-{   
-    public Transform target;
-
-    float m_fDir = 0.5f;
-    float m_fSpeed = 10f;
-    float m_fRange = 0f;
-    float m_fDiff = 0f;
-
+{
+    [SerializeField]
+    Transform target;
+   
     Vector3 direction;
     Vector3 destination;
     NavMeshAgent agent;
 
-    bool isRange = false;
-    bool isAttackRange = false;
-
-    Rigidbody rigid;   
-    Transform targetTransform;
-    Animator anin;      
-
+    bool isRange = false;    
+     
+    Animator anin;     
     IEnumerator CheckRange()
     {
         while(true)
@@ -45,9 +37,10 @@ public class Zombie_EasyPattern : MonoBehaviour
     }
 
     private void Awake()
-    {       
-        rigid = GetComponent<Rigidbody>();
+    {      
         anin = GetComponent<Animator>();
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+
     }
 
     private void Start()
