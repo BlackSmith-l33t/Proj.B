@@ -89,5 +89,5 @@ public class Zombie_HardPattern : MonoBehaviour
             transform.Translate(0f, 0f, 0.6f * Time.deltaTime);
             //Debug.Log("Move");
         }
-    }
+    }   
 }

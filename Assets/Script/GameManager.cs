@@ -7,23 +7,28 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Player")]
     public GameObject prisoner;
+    public vThirdPersonController personController;
+    public vThirdPersonCamera mainCamera;
+    public PrisonerController prisonerController;
+
+    [Header ("Death State")]    
     public GameObject deathUI;
     public GameObject HUD;
-    public GameObject startPoint;
     public Image fadeOutImage;
-    public vThirdPersonCamera mainCamera;
-    public vRagdoll deathMotion;
-    public vThirdPersonController prisonerController;
+    public vRagdoll deathMotion;    
 
-    bool isPlaying = false;
+    [Header("Game Start Initialization")]
+    public GameObject startPoint;
+    public Light prisonerLight;    
 
-    Light prisonerLight;       
+    bool isPlaying = false;           
 
     private void Awake()
     {             
-        prisoner.GetComponent<PrisonerController>().OnDie += Death;
-        prisonerController.onChangeHealth.AddListener(OnChangeHealth);
+        //prisoner.GetComponent<PrisonerController>().OnDie += Death;
+        personController.onChangeHealth.AddListener(OnChangeHealth);
         StartCoroutine(GameStart());
     }
 
@@ -44,25 +49,32 @@ public class GameManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(3.5f);
-        SceneManager.LoadScene("GameStart");
+        SceneManager.LoadScene("Repeat");
     }
 
     IEnumerator GameStart()
-    {
-        yield return new WaitForSeconds(0.1f);
-
-        if (prisonerController.isGrounded)
+    {  
+        while (true)
         {
-            GameisOn();
-        }
+            yield return new WaitForSeconds(0.1f);
+
+            if (Input.anyKey)
+            {
+                Debug.Log("GameisOn!");
+                GameisOn();
+                break;
+            }
+        }        
     }
 
-    private void Death()
+    IEnumerator Death()
     {
+        yield return new WaitForSeconds(1.0f);
+
         if (isPlaying == true) //중복재생방지
         {
             Debug.Log("fade In 실행 중");
-            return;
+            yield break;
         }
         deathUI.SetActive(true);
         HUD.SetActive(false);
@@ -83,7 +95,9 @@ public class GameManager : MonoBehaviour
     }
 
     private void GameisOn()
-    {
-        // TODO : 빛 감소 / 불사 해제 / 일어나기 해제 / 
+    {      
+        prisonerLight.intensity = 5;
+        personController.isImmortal = false;
+        deathMotion.keepRagdolled = false;       
     }
 }

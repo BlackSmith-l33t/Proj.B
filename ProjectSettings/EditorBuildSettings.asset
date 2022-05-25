@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Pit.unity
     guid: 2dbdfeb292479424c88223ec7dd445d1
+  - enabled: 1
+    path: Assets/Scenes/Repeat.unity
+    guid: 4a284ac8b99fc6743b58e644dda632f5
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000

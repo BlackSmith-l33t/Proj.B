@@ -8,15 +8,29 @@ public class PrisonerController: MonoBehaviour
     public event UnityAction OnDie;
     public event UnityAction OnScore;
     public bool isAlive = true;
-    public bool isGround = false;
-    
+    public bool m_IsGround = false;
+
+    public Event OnDeath;
+
     vThirdPersonController prisonerController;
     
     int BombBoxLayer = 19;
     int enemy = 9;
     int damage = 50;
 
-    float hp;
+    float hp;   
+
+    public bool isGround
+    {
+        get
+        {
+            return m_IsGround;
+        }
+        set
+        {
+            m_IsGround = value;
+        }
+    }
 
     private void Awake()
     {
@@ -44,9 +58,7 @@ public class PrisonerController: MonoBehaviour
                 Debug.Log("You Die");
                 Debug.Log(hp);
             }       
-        }
-
-        isGround = true;
+        }      
     }  
 }
    
