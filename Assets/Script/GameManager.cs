@@ -18,13 +18,10 @@ public class GameManager : MonoBehaviour
 
     bool isPlaying = false;
 
-    Light prisonerLight;       
-
     private void Awake()
     {             
         prisoner.GetComponent<PrisonerController>().OnDie += Death;
         prisonerController.onChangeHealth.AddListener(OnChangeHealth);
-        StartCoroutine(GameStart());
     }
 
     IEnumerator StartFadeInOut()
@@ -44,17 +41,7 @@ public class GameManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(3.5f);
-        SceneManager.LoadScene("GameStart");
-    }
-
-    IEnumerator GameStart()
-    {
-        yield return new WaitForSeconds(0.1f);
-
-        if (prisonerController.isGrounded)
-        {
-            GameisOn();
-        }
+        SceneManager.LoadScene("Pit");
     }
 
     private void Death()
@@ -80,10 +67,5 @@ public class GameManager : MonoBehaviour
             StartCoroutine("StartFadeInOut");
             Debug.Log("You Die");            
         }
-    }
-
-    private void GameisOn()
-    {
-        // TODO : 빛 감소 / 불사 해제 / 일어나기 해제 / 
-    }
+    }    
 }

@@ -8,7 +8,6 @@ public class PrisonerController: MonoBehaviour
     public event UnityAction OnDie;
     public event UnityAction OnScore;
     public bool isAlive = true;
-    public bool isGround = false;
     
     vThirdPersonController prisonerController;
     
@@ -44,9 +43,7 @@ public class PrisonerController: MonoBehaviour
                 Debug.Log("You Die");
                 Debug.Log(hp);
             }       
-        }
-
-        isGround = true;
+        }    
     }  
 }
    
