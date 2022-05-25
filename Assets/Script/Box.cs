@@ -38,7 +38,7 @@ public class Box : MonoBehaviour
             isTouch = true;
             Debug.Log("콰지직!");
             Destroy(boxCollider);
-            Destroy(box, 5);
+            Destroy(box, 8);
         }    
     }
 }

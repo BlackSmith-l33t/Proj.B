@@ -1,9 +1,22 @@
 ﻿using System.Collections;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Invector.vCharacterController;
 using Invector.vCamera;
 using UnityEngine.SceneManagement;
+
+enum RespawnPoint
+{
+    POINT1,
+    POINT2,
+    POINT3,
+    POINT4,
+    POINT5,
+
+    MAX
+}
+
 
 public class GameManager : MonoBehaviour
 {
@@ -19,17 +32,31 @@ public class GameManager : MonoBehaviour
     public Image fadeOutImage;
     public vRagdoll deathMotion;    
 
-    [Header("Game Start Initialization")]
-    public GameObject startPoint;
-    public Light prisonerLight;    
+    [Header("Respawn Setting Information")]    
+    public Scene scene;
+    public GameObject RespawnPoint1;
+    public GameObject RespawnPoint2;
+    public GameObject RespawnPoint3;
+    public GameObject RespawnPoint4;
+    public GameObject RespawnPoint5; 
+    public GameObject RespawnPoint6;
 
     bool isPlaying = false;           
 
     private void Awake()
     {             
-        //prisoner.GetComponent<PrisonerController>().OnDie += Death;
+        prisoner.GetComponent<PrisonerController>().OnDie += Death;
         personController.onChangeHealth.AddListener(OnChangeHealth);
         StartCoroutine(GameStart());
+
+        scene = SceneManager.GetActiveScene();
+        Debug.Log("Name: " + scene.name);
+
+        if (scene.name == "Repeat")
+        {
+            Debug.Log("Start Posion Set");            
+            prisoner.transform.position = SetRespawnPoint().position;
+        }        
     }
 
     IEnumerator StartFadeInOut()
@@ -37,6 +64,12 @@ public class GameManager : MonoBehaviour
         isPlaying = true;
 
         yield return new WaitForSeconds(4.0f);
+
+        deathUI.SetActive(true);
+        HUD.SetActive(false);
+        mainCamera.GetComponentInChildren<GraySceleEffect>().enabled = true;
+
+        yield return new WaitForSeconds(2.0f);
 
         Color fadeColor = fadeOutImage.color;
 
@@ -48,7 +81,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(3.3f);
         SceneManager.LoadScene("Repeat");
     }
 
@@ -67,18 +100,18 @@ public class GameManager : MonoBehaviour
         }        
     }
 
-    IEnumerator Death()
+    public void Death()
     {
-        yield return new WaitForSeconds(1.0f);
+        //yield return new WaitForSeconds(1.0f);
 
         if (isPlaying == true) //중복재생방지
         {
             Debug.Log("fade In 실행 중");
-            yield break;
+            return;
         }
-        deathUI.SetActive(true);
-        HUD.SetActive(false);
-        mainCamera.GetComponentInChildren<GraySceleEffect>().enabled = true;
+        //deathUI.SetActive(true);
+        //HUD.SetActive(false);
+        //mainCamera.GetComponentInChildren<GraySceleEffect>().enabled = true;
         //GetComponentInChildren<vThirdPersonCamera>().isFreezed = true;
 
         Debug.Log("fade out 호출");       
@@ -95,9 +128,47 @@ public class GameManager : MonoBehaviour
     }
 
     private void GameisOn()
-    {      
-        prisonerLight.intensity = 5;
+    {            
         personController.isImmortal = false;
         deathMotion.keepRagdolled = false;       
+    }
+
+    private Transform SetRespawnPoint()
+    {
+        // TODO : random startPoint settting         
+
+        Transform position = RespawnPoint1.transform;
+        System.Random randomPoint = new System.Random();
+
+
+        int pointNum;
+        pointNum = randomPoint.Next(1, 6);
+        Debug.Log("randomNumber : " + pointNum);
+
+        switch (pointNum)
+        {
+            case 1:
+                position = RespawnPoint1.transform;
+                break;
+            case 2:
+                position = RespawnPoint2.transform;
+                break;
+            case 3:
+                position = RespawnPoint3.transform;
+                break;
+            case 4:
+                position = RespawnPoint4.transform;
+                break;
+            case 5:
+                position = RespawnPoint5.transform;
+                break;
+            case 6: 
+                position = RespawnPoint6.transform;
+                break;
+            default:
+                break;
+        }
+
+        return position;
     }
 }

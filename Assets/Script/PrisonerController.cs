@@ -43,7 +43,7 @@ public class PrisonerController: MonoBehaviour
         if (other.gameObject.layer == BombBoxLayer)
         {
             isAlive = false;
-            prisonerController.currentHealth = 0.0f;
+            prisonerController.currentHealth = -1.0f;
             OnDie?.Invoke();
             Debug.Log("You Die");
             Debug.Log(prisonerController.currentHealth);            
