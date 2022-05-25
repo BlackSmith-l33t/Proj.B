@@ -5,8 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class Zombie_HardPattern : MonoBehaviour
-{
-    [SerializeField]
+{  
     Transform target;
 
     public GameObject zombie;   

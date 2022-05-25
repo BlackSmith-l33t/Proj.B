@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class Zombie_EasyPattern : MonoBehaviour
 {
-    [SerializeField]
     Transform target;
    
     Vector3 direction;
@@ -34,6 +33,7 @@ public class Zombie_EasyPattern : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         anin.SetTrigger("Attacking");
+        // TODO : 넉백 추가
     }
 
     private void Awake()
