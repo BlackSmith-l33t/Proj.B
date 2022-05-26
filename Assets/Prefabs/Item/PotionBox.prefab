@@ -462,8 +462,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.03, z: 0.3}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Size: {x: 0.8609586, y: 0.78616124, z: 0.8329544}
+  m_Center: {x: -0.011948243, y: 0.39307633, z: 0.0057377215}
 --- !u!114 &6844512219558202419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,6 +481,7 @@ MonoBehaviour:
   DestoryEvent:
     m_PersistentCalls:
       m_Calls: []
+  potion: {fileID: 0}
 --- !u!1 &6965553549398848156
 GameObject:
   m_ObjectHideFlags: 0
@@ -15827,8 +15828,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6964577614156643846}
-  - component: {fileID: 6965119798207483649}
-  - component: {fileID: 6965119798207483650}
   m_Layer: 20
   m_Name: Destroy_box
   m_TagString: Untagged
@@ -15871,31 +15870,6 @@ Transform:
   m_Father: {fileID: 6964577616837817556}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6965119798207483649
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6965553552227909002}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0.3}
---- !u!114 &6965119798207483650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6965553552227909002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44e0b8ed988e97f43aee203699629f73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6965553552329313730
 GameObject:
   m_ObjectHideFlags: 0

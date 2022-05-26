@@ -4,7 +4,13 @@ using Invector.vCharacterController;
 using UnityEngine.Events;
 
 public class PrisonerController: MonoBehaviour
-{
+{    public enum PotionList
+    {
+        HP_POTION = 22,
+        SP_POTION = 23,
+        JUMP_POTION = 24
+    }
+
     public event UnityAction OnDie;
     public event UnityAction OnScore;
     public bool isAlive = true;
@@ -13,7 +19,8 @@ public class PrisonerController: MonoBehaviour
     public Event OnDeath;
 
     vThirdPersonController prisonerController;
-    
+    vThirdPersonInput personInput;
+
     int BombBoxLayer = 19;
     int enemy = 9;
     int damage = 50;
@@ -34,7 +41,8 @@ public class PrisonerController: MonoBehaviour
 
     private void Awake()
     {
-        prisonerController = GetComponent<vThirdPersonController>();          
+        prisonerController = GetComponent<vThirdPersonController>();
+        personInput = GetComponent<vThirdPersonInput>();
     }
 
     private void OnCollisionEnter(Collision other)
@@ -46,7 +54,8 @@ public class PrisonerController: MonoBehaviour
             prisonerController.currentHealth = -1.0f;
             OnDie?.Invoke();
             Debug.Log("You Die");
-            Debug.Log(prisonerController.currentHealth);            
+            Debug.Log(prisonerController.currentHealth);
+            personInput.lockInput = true;
         }
         else if (other.gameObject.layer == enemy)
         {         
@@ -58,7 +67,22 @@ public class PrisonerController: MonoBehaviour
                 Debug.Log("You Die");
                 Debug.Log(hp);
             }       
-        }      
+        }
+        else if (other.gameObject.layer == (int)PotionList.HP_POTION)
+        {
+            Debug.Log("빨간 약");
+            prisonerController.currentHealth = 100.0f;
+        }
+        else if (other.gameObject.layer == (int)PotionList.SP_POTION)
+        {
+            Debug.Log("초록 약");
+            prisonerController.currentStamina = 100.0f;
+        }
+        else if (other.gameObject.layer == (int)PotionList.JUMP_POTION)
+        {
+            Debug.Log("파란 약");
+            prisonerController.jumpHeight = 40.0f;
+        }
     }  
 }
    

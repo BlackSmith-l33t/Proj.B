@@ -24,7 +24,6 @@ public class PotionBox: MonoBehaviour
     {
         anim = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider>();
-
     }
 
     private void OnCollisionEnter(Collision other)
@@ -32,21 +31,14 @@ public class PotionBox: MonoBehaviour
         if (other.gameObject.tag.Equals("Player"))
         {
             DestroyAlarm();
-            anim.SetTrigger("Touch");
-            //explsionParticle.Play();
+            anim.SetTrigger("Touch");            
             glitterParticle.Stop();
             isTouch = true;
             Debug.Log("콰지직!");
             Destroy(boxCollider);
-            Destroy(box, 8);
-
-            // TODO : 박스가 깨지면 포션이 생긴다.
+            Destroy(box, 8);            
 
             Instantiate(potion, transform.position, Quaternion.identity);
-
         }
-
     }
-
-
 }

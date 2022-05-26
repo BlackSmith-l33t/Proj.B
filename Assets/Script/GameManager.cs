@@ -6,17 +6,6 @@ using Invector.vCharacterController;
 using Invector.vCamera;
 using UnityEngine.SceneManagement;
 
-enum RespawnPoint
-{
-    POINT1,
-    POINT2,
-    POINT3,
-    POINT4,
-    POINT5,
-
-    MAX
-}
-
 
 public class GameManager : MonoBehaviour
 {
@@ -101,9 +90,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void Death()
-    {
-        //yield return new WaitForSeconds(1.0f);
-
+    {           
         if (isPlaying == true) //중복재생방지
         {
             Debug.Log("fade In 실행 중");
@@ -171,4 +158,6 @@ public class GameManager : MonoBehaviour
 
         return position;
     }
+
+
 }

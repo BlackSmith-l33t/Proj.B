@@ -13,7 +13,6 @@ public class DestroyBox : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
         box = GetComponentInParent<BombBox>();
         box.DestoryEvent.AddListener(ColliderDestroy);
-        
     }
 
     public void ColliderDestroy()

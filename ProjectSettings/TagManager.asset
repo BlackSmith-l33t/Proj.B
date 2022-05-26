@@ -51,14 +51,14 @@ TagManager:
   - Pushable
   - CoverPoint
   - BombBox
-  - PotionBox
+  - 
   - Ground
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - HP_Potion
+  - SP_Potioin
+  - J_Potion
+  - RedBox
+  - BlueBox
+  - GreenBox
   - 
   - 
   - 
