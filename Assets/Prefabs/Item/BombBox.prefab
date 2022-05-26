@@ -15426,11 +15426,11 @@ GameObject:
   - component: {fileID: 8786801756816185168}
   - component: {fileID: 8696251155442855410}
   - component: {fileID: 8790683804222570553}
-  - component: {fileID: 8790683804222570552}
+  - component: {fileID: 5732848260754505375}
   m_Layer: 19
-  m_Name: ExplosionBox
+  m_Name: BombBox
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -15484,7 +15484,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.03, z: 0.3}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &8790683804222570552
+--- !u!114 &5732848260754505375
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

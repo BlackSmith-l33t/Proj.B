@@ -51,7 +51,7 @@ TagManager:
   - Pushable
   - CoverPoint
   - BombBox
-  - Item
+  - PotionBox
   - Ground
   - 
   - 

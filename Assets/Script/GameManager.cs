@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     public Image fadeOutImage;
     public vRagdoll deathMotion;    
 
-    [Header("Respawn Setting Information")]    
+    [Header("Respawn Setting Information")]  
     public Scene scene;
     public GameObject RespawnPoint1;
     public GameObject RespawnPoint2;

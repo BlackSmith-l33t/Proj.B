@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Box : MonoBehaviour
+public class BombBox : MonoBehaviour
 {
     public GameObject box;
     public ParticleSystem glitterParticle;
