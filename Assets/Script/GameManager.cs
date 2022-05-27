@@ -91,15 +91,11 @@ public class GameManager : MonoBehaviour
 
     public void Death()
     {           
-        if (isPlaying == true) //중복재생방지
+        if (isPlaying == true) 
         {
             Debug.Log("fade In 실행 중");
             return;
         }
-        //deathUI.SetActive(true);
-        //HUD.SetActive(false);
-        //mainCamera.GetComponentInChildren<GraySceleEffect>().enabled = true;
-        //GetComponentInChildren<vThirdPersonCamera>().isFreezed = true;
 
         Debug.Log("fade out 호출");       
         StartCoroutine("StartFadeInOut");
@@ -122,11 +118,9 @@ public class GameManager : MonoBehaviour
 
     private Transform SetRespawnPoint()
     {
-        // TODO : random startPoint settting         
-
+        //random startPoint settting   
         Transform position = RespawnPoint1.transform;
         System.Random randomPoint = new System.Random();
-
 
         int pointNum;
         pointNum = randomPoint.Next(1, 6);
@@ -155,9 +149,6 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
-
         return position;
     }
-
-
 }
