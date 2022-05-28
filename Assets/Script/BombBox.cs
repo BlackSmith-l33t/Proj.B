@@ -24,7 +24,6 @@ public class BombBox : MonoBehaviour
     {
         anim = GetComponent<Animator>();     
         boxCollider = GetComponent<BoxCollider>();  
-
     }
 
     private void OnCollisionEnter(Collision other)
