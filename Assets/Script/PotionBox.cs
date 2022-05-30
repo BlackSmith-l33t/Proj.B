@@ -10,7 +10,7 @@ public class PotionBox: MonoBehaviour
     public UnityEvent DestoryEvent;
     public Potion potion;
 
-    bool isTouch = false;
+    bool isTouch = false;   
 
     BoxCollider boxCollider;
     Animator anim;
@@ -36,9 +36,15 @@ public class PotionBox: MonoBehaviour
             isTouch = true;
             Debug.Log("콰지직!");
             Destroy(boxCollider);
-            Destroy(box, 8);            
+            Destroy(box, 8);
+            GetComponent<RespawnZombie>().enabled = false;
 
-            Instantiate(potion, transform.position, Quaternion.identity);
+            if (!(null == potion))
+            {
+                Instantiate(potion, transform.position, Quaternion.identity);
+            }           
         }
     }
+
+    
 }

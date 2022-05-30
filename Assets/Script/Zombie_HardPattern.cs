@@ -10,14 +10,12 @@ public class Zombie_HardPattern : MonoBehaviour
 
     public GameObject zombie;   
 
-    float m_fDir = 0.5f;
-    float m_fSpeed = 10f;
-    float m_fRange = 0f;
-    float m_fDiff = 0f;
-
     Vector3 direction;
     Vector3 destination;
-    NavMeshAgent agent;  
+    NavMeshAgent agent;
+
+    int safeZone = 28;
+    int player = 8;
 
     bool isDead = false;
     bool isRange = false;
@@ -45,12 +43,34 @@ public class Zombie_HardPattern : MonoBehaviour
             }
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        //isRange = true;
+        // TODO : 넉백 추가
+
+        if (safeZone == other.gameObject.layer)
+        {
+            Debug.Log("safeZone!");
+            transform.Rotate(new Vector3(0, -180f, 0));
+            isRange = false;
+            GetComponent<NavMeshAgent>().enabled = false;
+            anin.SetBool("isTrace", isRange);
+            Debug.Log(transform.rotation);
+            return;
+        }
+        else if (player == other.gameObject.layer)
+        {
+            isRange = true;
+            anin.SetTrigger("Attacking");
+        }
+    }
+
     private void Awake()
     {      
         anin = GetComponent<Animator>();
         hitPointSet = GetComponentInChildren<HitPointSet>();
         hitPointSet.OnZombieDead.AddListener(Dead);
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        target = GameObject.FindGameObjectWithTag("Player").transform;         
     }
 
     private void Start()
@@ -58,13 +78,14 @@ public class Zombie_HardPattern : MonoBehaviour
         direction = transform.position;
         agent = GetComponent<NavMeshAgent>();
         destination = agent.destination;
-        anin.SetBool("IsRange", isRange);
+        anin.SetBool("IsRange", isRange);        
 
         StartCoroutine(CheckRange());       
     }
 
     private void FixedUpdate()
     {
+        // TODO : 코루틴 사용 고려
         RaycastHit forwardRange;
 
         if (isDead) return;
@@ -77,9 +98,7 @@ public class Zombie_HardPattern : MonoBehaviour
         }
         else if (Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0f, 1.5f, 5f)), out forwardRange, 2f, LayerMask.GetMask("Default")))
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(new Vector3(0f, 3f, 5f)), new Color(0, 0, 1));
-            Quaternion rotation = Quaternion.Euler(0f, 180f, 0f);
-
+            Debug.DrawRay(transform.position, transform.TransformDirection(new Vector3(0f, 3f, 5f)), new Color(0, 0, 1));            
             transform.Rotate(new Vector3(0, -180f, 0));                     
             //Debug.Log("Hit Wall");
         }
@@ -89,5 +108,6 @@ public class Zombie_HardPattern : MonoBehaviour
             transform.Translate(0f, 0f, 0.6f * Time.deltaTime);
             //Debug.Log("Move");
         }
-    }   
+    }
+   
 }

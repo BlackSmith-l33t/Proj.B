@@ -11,8 +11,11 @@ public class Zombie_EasyPattern : MonoBehaviour
     Vector3 destination;
     NavMeshAgent agent;
 
-    bool isRange = false;    
-     
+    bool isRange = false;
+    int safeZone = 28;
+    int player = 8;
+
+
     Animator anin;     
     IEnumerator CheckRange()
     {
@@ -32,8 +35,21 @@ public class Zombie_EasyPattern : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        anin.SetTrigger("Attacking");
-        // TODO : 넉백 추가
+        if (safeZone == other.gameObject.layer)
+        {
+            Debug.Log("safeZone!");
+            transform.Rotate(new Vector3(0, -180f, 0));
+            isRange = false;
+            GetComponent<NavMeshAgent>().enabled = false;
+            anin.SetBool("isTrace", isRange);
+            Debug.Log(transform.rotation);
+            return;
+        }
+        else if (player == other.gameObject.layer)
+        {
+            isRange = true;
+            anin.SetTrigger("Attacking");
+        }            
     }
 
     private void Awake()
@@ -66,14 +82,14 @@ public class Zombie_EasyPattern : MonoBehaviour
         else if (Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0f, 1.5f, 5f)), out forwardRange, 2f, LayerMask.GetMask("Default")))
         {         
             Debug.DrawRay(transform.position, transform.TransformDirection(new Vector3(0f, 3f, 5f)), new Color(0, 0, 1));
-            Quaternion rotation = Quaternion.Euler(0f, 180f, 0f);
+            //Quaternion rotation = Quaternion.Euler(0f, 180f, 0f);
 
             transform.Rotate(new Vector3(0, -180f, 0));              
             Debug.Log("Hit Wall");
         }
         else
         {            
-            Debug.DrawRay(transform.position, transform.TransformDirection(new Vector3(0f, 1.5f, 10f)), new Color(0, 1, 0));
+            Debug.DrawRay(transform.position, transform.TransformDirection(new Vector3(0f, 1.5f, 10f)), new Color(0, 1, 1));
             transform.Translate(0f, 0f, 0.6f * Time.deltaTime);                         
         }
     }

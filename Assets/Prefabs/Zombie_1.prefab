@@ -534,7 +534,6 @@ MonoBehaviour:
   OnZombieDead:
     m_PersistentCalls:
       m_Calls: []
-  prisoner: {fileID: 0}
 --- !u!135 &3413504819095181025
 SphereCollider:
   m_ObjectHideFlags: 0
