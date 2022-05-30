@@ -23,7 +23,7 @@ public class PrisonerController: MonoBehaviour
 
     int BombBoxLayer = 19;
     int enemy = 9;
-    int damage = 50;
+    int damage = 1;
 
     float hp;   
 

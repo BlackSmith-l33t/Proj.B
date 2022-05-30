@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class HitPointSet : MonoBehaviour
 {    
-    public UnityEvent OnZombieDead;
+    public UnityEvent OnZombieDead;    
 
     Animator anim;
     NavMeshAgent navMeshAgent;
@@ -30,7 +30,7 @@ public class HitPointSet : MonoBehaviour
             anim.SetBool("IsRange", false);
             navMeshAgent.enabled = false;
             Dead(); 
-            Debug.Log("넥슬라이스!");
+            Debug.Log("넥슬라이스!");           
         }
     }
 }
