@@ -9,11 +9,13 @@ public class PotionBox: MonoBehaviour
     public ParticleSystem glitterParticle;   
     public UnityEvent DestoryEvent;
     public Potion potion;
-
+    public GameObject zombie;
+    
     bool isTouch = false;   
 
     BoxCollider boxCollider;
     Animator anim;
+    RespawnZombie respawn;
 
     private void DestroyAlarm()
     {
@@ -24,6 +26,7 @@ public class PotionBox: MonoBehaviour
     {
         anim = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider>();
+        respawn = GetComponent<RespawnZombie>();
     }
 
     private void OnCollisionEnter(Collision other)
@@ -37,12 +40,20 @@ public class PotionBox: MonoBehaviour
             Debug.Log("콰지직!");
             Destroy(boxCollider);
             Destroy(box, 8);
-            GetComponent<RespawnZombie>().enabled = false;
+            
+            if (respawn)
+            {
+                GetComponent<RespawnZombie>().enabled = false;
+            }            
 
             if (!(null == potion))
             {
                 Instantiate(potion, transform.position, Quaternion.identity);
-            }           
+            }  
+            else if (zombie)
+            {
+                Instantiate(zombie, transform.position, Quaternion.identity);
+            }
         }
     }
 
