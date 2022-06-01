@@ -6,9 +6,7 @@ using UnityEngine.Events;
 
 public class Zombie_HardPattern : MonoBehaviour
 {  
-    Transform target;
-
-    public GameObject zombie;   
+    Transform target;   
 
     Vector3 direction;
     Vector3 destination;
@@ -26,6 +24,7 @@ public class Zombie_HardPattern : MonoBehaviour
     public void Dead()
     {
        isDead = true;
+       Debug.Log("느린 좀비 죽음");
     }
 
     IEnumerator CheckRange()
@@ -36,33 +35,26 @@ public class Zombie_HardPattern : MonoBehaviour
 
             if (isRange && !isDead)
             {
-                anin.SetBool("IsRange", isRange);
+                anin.SetBool("IsTrace", isRange);
                 GetComponent<NavMeshAgent>().enabled = true;
                 destination = target.position;
                 agent.destination = destination;
             }
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        //isRange = true;
-        // TODO : 넉백 추가
-
         if (safeZone == other.gameObject.layer)
         {
             Debug.Log("safeZone!");
             transform.Rotate(new Vector3(0, -180f, 0));
             isRange = false;
             GetComponent<NavMeshAgent>().enabled = false;
-            anin.SetBool("isTrace", isRange);
+            anin.SetBool("IsTrace", isRange);
             Debug.Log(transform.rotation);
             return;
-        }
-        else if (player == other.gameObject.layer)
-        {
-            isRange = true;
-            anin.SetTrigger("Attacking");
-        }
+        }    
     }
 
     private void Awake()
@@ -70,7 +62,7 @@ public class Zombie_HardPattern : MonoBehaviour
         anin = GetComponent<Animator>();
         hitPointSet = GetComponentInChildren<HitPointSet>();
         hitPointSet.OnZombieDead.AddListener(Dead);
-        target = GameObject.FindGameObjectWithTag("Player").transform;         
+        target = GameObject.FindGameObjectWithTag("Player").transform;        
     }
 
     private void Start()
@@ -78,7 +70,7 @@ public class Zombie_HardPattern : MonoBehaviour
         direction = transform.position;
         agent = GetComponent<NavMeshAgent>();
         destination = agent.destination;
-        anin.SetBool("IsRange", isRange);        
+        anin.SetBool("IsTrace", isRange);        
 
         StartCoroutine(CheckRange());       
     }

@@ -6,7 +6,8 @@ using UnityEngine.Events;
 
 public class HitPointSet : MonoBehaviour
 {    
-    public UnityEvent OnZombieDead;    
+    public UnityEvent OnZombieDead;
+    public GameObject zombie;
 
     Animator anim;
     NavMeshAgent navMeshAgent;
@@ -26,8 +27,9 @@ public class HitPointSet : MonoBehaviour
     {
         if (other.gameObject.tag.Equals("Player"))
         {
+            zombie.GetComponent<Zombie_Info>().damage = 0;
             anim.SetBool("Die", true);
-            anim.SetBool("IsRange", false);
+            anim.SetBool("IsTrace", false);
             navMeshAgent.enabled = false;
             Dead(); 
             Debug.Log("넥슬라이스!");           

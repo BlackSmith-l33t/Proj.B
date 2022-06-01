@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class Zombie_EasyPattern : MonoBehaviour
 {
@@ -10,11 +11,19 @@ public class Zombie_EasyPattern : MonoBehaviour
     Vector3 direction;
     Vector3 destination;
     NavMeshAgent agent;
+    HitPointSet hitPointSet;
 
     bool isRange = false;
+    bool isDead = false;
     int safeZone = 28;
     int player = 8;
 
+    public void Dead()
+    {        
+        isDead = true;       
+        this.enabled = false; 
+        Debug.Log("빠른 좀비 죽음");
+    }
 
     Animator anin;     
     IEnumerator CheckRange()
@@ -23,12 +32,13 @@ public class Zombie_EasyPattern : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
 
-            if (isRange)
+            if (isRange && !isDead)
             {
-                anin.SetBool("isTrace", isRange);
+                anin.SetBool("IsTrace", isRange);
                 GetComponent<NavMeshAgent>().enabled = true;
                 destination = target.position;
-                agent.destination = destination;                
+                agent.destination = destination;
+                Debug.Log("네비 발동");
             }
         }
     }
@@ -41,7 +51,7 @@ public class Zombie_EasyPattern : MonoBehaviour
             transform.Rotate(new Vector3(0, -180f, 0));
             isRange = false;
             GetComponent<NavMeshAgent>().enabled = false;
-            anin.SetBool("isTrace", isRange);
+            anin.SetBool("IsTrace", isRange);
             Debug.Log(transform.rotation);
             return;
         }
@@ -55,8 +65,9 @@ public class Zombie_EasyPattern : MonoBehaviour
     private void Awake()
     {      
         anin = GetComponent<Animator>();
+        hitPointSet = GetComponentInChildren<HitPointSet>();
+        hitPointSet.OnZombieDead.AddListener(Dead);
         target = GameObject.FindGameObjectWithTag("Player").transform;
-
     }
 
     private void Start()
@@ -64,7 +75,7 @@ public class Zombie_EasyPattern : MonoBehaviour
         direction = transform.position;
         agent = GetComponent<NavMeshAgent>();
         destination = agent.destination;
-        anin.SetBool("isTrace", isRange);        
+        anin.SetBool("IsTrace", isRange);        
 
         StartCoroutine(CheckRange());        
     }
@@ -82,8 +93,6 @@ public class Zombie_EasyPattern : MonoBehaviour
         else if (Physics.Raycast(transform.position, transform.TransformDirection(new Vector3(0f, 1.5f, 5f)), out forwardRange, 2f, LayerMask.GetMask("Default")))
         {         
             Debug.DrawRay(transform.position, transform.TransformDirection(new Vector3(0f, 3f, 5f)), new Color(0, 0, 1));
-            //Quaternion rotation = Quaternion.Euler(0f, 180f, 0f);
-
             transform.Rotate(new Vector3(0, -180f, 0));              
             //Debug.Log("Hit Wall");
         }
