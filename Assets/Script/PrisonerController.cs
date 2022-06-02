@@ -94,7 +94,8 @@ public class PrisonerController: MonoBehaviour
         }
         else if (gate == other.gameObject.layer)
         {
-            q_Gates.Enqueue(other.gameObject.GetComponent<GateWay>().gate);
+            //q_Gates.Enqueue(other.gameObject.GetComponent<GateWay>().gate);
+            Debug.Log("게이트웨이와 접촉");
         }
     }  
 }
