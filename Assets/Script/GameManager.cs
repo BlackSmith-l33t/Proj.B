@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour
     public GameObject deathUI;
     public GameObject HUD;
     public Image fadeOutImage;
-    public vRagdoll deathMotion;    
+    public vRagdoll deathMotion;
+    public StairBox_TimeBomb timeBomb;
 
     [Header("Respawn Setting Information")]  
     public Scene scene;
@@ -30,12 +31,13 @@ public class GameManager : MonoBehaviour
     public GameObject RespawnPoint5; 
     public GameObject RespawnPoint6;
 
-    bool isPlaying = false;           
+    bool isPlaying = false;
 
     private void Awake()
-    {             
+    {
+        timeBomb.OnDie += Death;
         prisoner.GetComponent<PrisonerController>().OnDie += Death;
-        personController.onChangeHealth.AddListener(OnChangeHealth);
+        personController.onChangeHealth.AddListener(OnChangeHealth);        
         StartCoroutine(GameStart());
 
         scene = SceneManager.GetActiveScene();
@@ -90,9 +92,10 @@ public class GameManager : MonoBehaviour
     }
 
     public void Death()
-    {           
+    {
+        prisoner.GetComponent<vThirdPersonController>().currentHealth = -1.0f;
         if (isPlaying == true) 
-        {
+        {            
             Debug.Log("fade In 실행 중");
             return;
         }
