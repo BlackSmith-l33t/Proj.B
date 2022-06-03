@@ -11,8 +11,9 @@ public class PotionBox: MonoBehaviour
     public Potion potion;
     public GameObject zombie;
     
-    bool isTouch = false;   
+    bool isTouch = false;
 
+    Rigidbody rigid;
     BoxCollider boxCollider;
     Animator anim;
     RespawnZombie respawn;
@@ -27,12 +28,13 @@ public class PotionBox: MonoBehaviour
         anim = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider>();
         respawn = GetComponent<RespawnZombie>();
+        rigid = GetComponent<Rigidbody>();
     }
 
     private void OnCollisionEnter(Collision other)
-    {
+    {        
         if (other.gameObject.tag.Equals("Player"))
-        {
+        {           
             DestroyAlarm();
             anim.SetTrigger("Touch");            
             glitterParticle.Stop();

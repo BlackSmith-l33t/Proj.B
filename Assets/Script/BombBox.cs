@@ -12,6 +12,7 @@ public class BombBox : MonoBehaviour
 
     bool isTouch = false;
 
+    Rigidbody rigid;
     BoxCollider boxCollider;
     Animator anim;
 
@@ -23,13 +24,18 @@ public class BombBox : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();     
-        boxCollider = GetComponent<BoxCollider>();  
+        boxCollider = GetComponent<BoxCollider>();
+        rigid = GetComponentInChildren<Rigidbody>();
     }
 
     private void OnCollisionEnter(Collision other)
     {      
         if (other.gameObject.tag.Equals("Player"))
         {
+            if (rigid)
+            {
+                rigid.useGravity = true;
+            }            
             DestroyAlarm();
             anim.SetTrigger("Touch");
             explsionParticle.Play();

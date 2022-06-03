@@ -90,7 +90,7 @@ public class PrisonerController: MonoBehaviour
         else if (other.gameObject.layer == (int)PotionList.JUMP_POTION)
         {
             Debug.Log("파란 약");
-            prisonerController.jumpHeight = 40.0f;
+            prisonerController.jumpHeight = 60.0f;
         }
         else if (gate == other.gameObject.layer)
         {
