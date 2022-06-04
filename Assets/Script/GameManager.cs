@@ -9,6 +9,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Chapter Title")]
+    public String Chapter = "Pit";
+
     [Header("Player")]
     public GameObject prisoner;
     public vThirdPersonController personController;
@@ -31,7 +34,14 @@ public class GameManager : MonoBehaviour
     public GameObject RespawnPoint5; 
     public GameObject RespawnPoint6;
 
+    [Header("Scene Change")]
+    public RespawnZombie respawnZombie;
+    public NextLevel nextLevel;
+    public EndGame endGame;
+
     bool isPlaying = false;
+    bool m_isGateOpen = false;
+
 
     private void Awake()
     {
@@ -43,10 +53,10 @@ public class GameManager : MonoBehaviour
         scene = SceneManager.GetActiveScene();
         Debug.Log("Name: " + scene.name);
 
-        if (scene.name == "Repeat")
+        if (scene.name == "Level_2")
         {
-            Debug.Log("Start Posion Set");            
-            prisoner.transform.position = SetRespawnPoint().position;
+            Debug.Log("Start Position Set");            
+            //prisoner.transform.position = SetRespawnPoint().position;
         }        
     }
 
@@ -72,8 +82,29 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
+        m_isGateOpen = respawnZombie.isGateOpen;   
+
         yield return new WaitForSeconds(3.3f);
-        SceneManager.LoadScene("Repeat");
+
+        if (endGame.endGame)
+        {
+            Debug.Log("EndGame");
+            SceneManager.LoadScene("EndGame");
+        }
+        else if (m_isGateOpen && nextLevel.StartNextLevel)
+        {            
+            Debug.Log("go to lv3");
+            SceneManager.LoadScene("Level_3");             
+        }
+        else if (m_isGateOpen && !nextLevel.StartNextLevel)
+        {
+            Debug.Log("go to lv2");
+            SceneManager.LoadScene("Level_2");
+        }      
+        else
+        {
+            SceneManager.LoadScene("Pit");
+        }       
     }
 
     IEnumerator GameStart()

@@ -51,7 +51,7 @@ TagManager:
   - Pushable
   - CoverPoint
   - BombBox
-  - 
+  - Mountain
   - Ground
   - HP_Potion
   - SP_Potioin
@@ -61,7 +61,7 @@ TagManager:
   - GreenBox
   - SafeZone
   - GateWay
-  - 
+  - NextLevelBox
   - PostProcess
   m_SortingLayers:
   - name: Default

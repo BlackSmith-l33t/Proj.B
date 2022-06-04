@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using Invector.vCharacterController;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PrisonerController: MonoBehaviour
 {    public enum PotionList
@@ -12,41 +13,32 @@ public class PrisonerController: MonoBehaviour
         JUMP_POTION = 24
     }
 
-    public event UnityAction OnDie;
-    public event UnityAction OnScore;
+    public event UnityAction OnDie;   
+    public Event             OnDeath;
+    public MountainOfStupid  mountain;
+   
     public bool isAlive = true;
     public bool m_IsGround = false;
-
-    public Event OnDeath;
+    public bool readyNextLevel = false;
 
     vThirdPersonController prisonerController;
-    vThirdPersonInput personInput;
-
-    Queue<GameObject> q_Gates;
+    vThirdPersonInput      personInput;
 
     // Layer Number
     int BombBoxLayer = 19;
-    int enemy = 9;
-    int gate = 29;
+    int enemy        = 9;
+    int gate         = 29;    
 
-    float hp;   
-
-    public bool isGround
-    {
-        get
-        {
-            return m_IsGround;
-        }
-        set
-        {
-            m_IsGround = value;
-        }
-    }
+    // Prisoner Info  
+    float   jumpPower;
+    float   jumpPowerMax = 30f;
+    float   hp;   
 
     private void Awake()
     {
         prisonerController = GetComponent<vThirdPersonController>();
         personInput = GetComponent<vThirdPersonInput>();
+        mountain.OnMountain += BeOnMountainHalfWay;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -56,7 +48,13 @@ public class PrisonerController: MonoBehaviour
             return;
         }
 
-            Debug.Log("플레이어 충돌 감지");
+        //if (other.gameObject.layer == nextLevelBox)
+        //{
+        //    readyNextLevel = true;
+        //    SceneManager.LoadScene("Level_3");
+        //}
+
+        Debug.Log("플레이어 충돌 감지");
         if (other.gameObject.layer == BombBoxLayer)
         {
             isAlive = false;
@@ -90,13 +88,21 @@ public class PrisonerController: MonoBehaviour
         else if (other.gameObject.layer == (int)PotionList.JUMP_POTION)
         {
             Debug.Log("파란 약");
-            prisonerController.jumpHeight = 60.0f;
+            prisonerController.jumpHeight = 53.0f;            
         }
-        else if (gate == other.gameObject.layer)
-        {
-            //q_Gates.Enqueue(other.gameObject.GetComponent<GateWay>().gate);
-            Debug.Log("게이트웨이와 접촉");
-        }
+      
     }  
+
+    public void BeOnMountainHalfWay()
+    {
+        jumpPower = prisonerController.jumpHeight = 30f;
+        mountain.OnMountain -= BeOnMountainHalfWay;
+        mountain.OnMountain += BeOnTop;
+    }
+
+    public void BeOnTop()
+    {
+        prisonerController.jumpHeight = 12f;
+    }
 }
    
