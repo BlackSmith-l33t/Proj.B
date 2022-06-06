@@ -16,15 +16,20 @@ public class PrisonerController: MonoBehaviour
     public event UnityAction OnDie;   
     public Event             OnDeath;
     public MountainOfStupid  mountain;
+    public MountainStart     mountainStart;
+    public EndGame           endGame;
    
     public bool isAlive = true;
     public bool m_IsGround = false;
-    public bool readyNextLevel = false;
+    bool isFinished = false;
 
     vThirdPersonController prisonerController;
     vThirdPersonInput      personInput;
 
     // Layer Number
+    int defaultLayer = 0;
+    int ground       = 21;
+    int wall         = 13;
     int BombBoxLayer = 19;
     int enemy        = 9;
     int gate         = 29;    
@@ -38,21 +43,26 @@ public class PrisonerController: MonoBehaviour
     {
         prisonerController = GetComponent<vThirdPersonController>();
         personInput = GetComponent<vThirdPersonInput>();
-        mountain.OnMountain += BeOnMountainHalfWay;
+        mountainStart.OnMountainStart += EnterMountain;
+        mountain.OnMountain += BeOnMountainWay;
+        endGame.OnFnishied += FinalFall;
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (0 == other.gameObject.layer)
-        {
+        if (defaultLayer == other.gameObject.layer)
+        {            
             return;
         }
 
-        //if (other.gameObject.layer == nextLevelBox)
-        //{
-        //    readyNextLevel = true;
-        //    SceneManager.LoadScene("Level_3");
-        //}
+        if (ground == other.gameObject.layer || wall == other.gameObject.layer)
+        {
+            m_IsGround = true;
+            prisonerController.jumpHeight = 12f;
+            Debug.Log("불로불사 해제");
+            prisonerController.isImmortal = false;
+            return;
+        }      
 
         Debug.Log("플레이어 충돌 감지");
         if (other.gameObject.layer == BombBoxLayer)
@@ -88,21 +98,33 @@ public class PrisonerController: MonoBehaviour
         else if (other.gameObject.layer == (int)PotionList.JUMP_POTION)
         {
             Debug.Log("파란 약");
-            prisonerController.jumpHeight = 53.0f;            
+            prisonerController.jumpHeight = 53.0f;       
         }
-      
     }  
 
-    public void BeOnMountainHalfWay()
+    public void BeOnMountainWay()
     {
         jumpPower = prisonerController.jumpHeight = 30f;
-        mountain.OnMountain -= BeOnMountainHalfWay;
+        mountain.OnMountain -= BeOnMountainWay;
         mountain.OnMountain += BeOnTop;
     }
 
     public void BeOnTop()
     {
         prisonerController.jumpHeight = 12f;
+        prisonerController.isImmortal = false;
+    }
+
+    public void EnterMountain()
+    {
+        Debug.Log("불로불사");
+        prisonerController.isImmortal = true;
+        jumpPower = prisonerController.jumpHeight = 53f;
+    }
+
+    public void FinalFall()
+    {
+        prisonerController.isImmortal = false;
     }
 }
    

@@ -13,20 +13,20 @@ public class GameManager : MonoBehaviour
     public String Chapter = "Pit";
 
     [Header("Player")]
-    public GameObject prisoner;
+    public GameObject             prisoner;
     public vThirdPersonController personController;
-    public vThirdPersonCamera mainCamera;
-    public PrisonerController prisonerController;
+    public vThirdPersonCamera     mainCamera;
+    public PrisonerController     prisonerController;
 
-    [Header ("Death State")]    
-    public GameObject deathUI;
-    public GameObject HUD;
-    public Image fadeOutImage;
-    public vRagdoll deathMotion;
+    [Header ("Death")]    
+    public GameObject        deathUI;
+    public GameObject        HUD;
+    public Image             fadeOutImage;
+    public vRagdoll          deathMotion;
     public StairBox_TimeBomb timeBomb;
 
     [Header("Respawn Setting Information")]  
-    public Scene scene;
+    public Scene      scene;
     public GameObject RespawnPoint1;
     public GameObject RespawnPoint2;
     public GameObject RespawnPoint3;
@@ -36,18 +36,27 @@ public class GameManager : MonoBehaviour
 
     [Header("Scene Change")]
     public RespawnZombie respawnZombie;
-    public NextLevel nextLevel;
-    public EndGame endGame;
+    public NextLevel     nextLevel;
+    public EndGame       endGame;
+    public bool          m_isEndGame = false;
+
+    [Header("Environment")]
+    public GameObject maze;
+    public GameObject Item;
+    public GameObject spacialZone;
+    public GameObject zombie;
+    public GameObject Mountain;
+
 
     bool isPlaying = false;
-    bool m_isGateOpen = false;
-
+    bool m_isGateOpen = false;   
 
     private void Awake()
     {
         timeBomb.OnDie += Death;
-        prisoner.GetComponent<PrisonerController>().OnDie += Death;
-        personController.onChangeHealth.AddListener(OnChangeHealth);        
+        prisoner.GetComponent<PrisonerController>().OnDie += Death;      
+        personController.onChangeHealth.AddListener(OnChangeHealth);
+        endGame.OnFnishied += GameOver;
         StartCoroutine(GameStart());
 
         scene = SceneManager.GetActiveScene();
@@ -55,18 +64,28 @@ public class GameManager : MonoBehaviour
 
         if (scene.name == "Level_2")
         {
-            Debug.Log("Start Position Set");            
+            Debug.Log("Start Position Set");
+            m_isGateOpen = true;
             //prisoner.transform.position = SetRespawnPoint().position;
         }        
     }
 
     IEnumerator StartFadeInOut()
-    {
+    {        
+        m_isEndGame = endGame.endGame;
         isPlaying = true;
+
+        if (!(scene.name == "Level_2"))
+        {
+            m_isGateOpen = respawnZombie.isGateOpen;
+        }             
 
         yield return new WaitForSeconds(4.0f);
 
-        deathUI.SetActive(true);
+        if (!m_isEndGame)
+        {
+            deathUI.SetActive(true);
+        }
         HUD.SetActive(false);
         mainCamera.GetComponentInChildren<GraySceleEffect>().enabled = true;
 
@@ -80,21 +99,20 @@ public class GameManager : MonoBehaviour
             fadeColor.a = f + 0.5f;
             fadeOutImage.color = fadeColor;
             yield return new WaitForSeconds(0.01f);
-        }
-
-        m_isGateOpen = respawnZombie.isGateOpen;   
-
+        }   
+     
         yield return new WaitForSeconds(3.3f);
 
         if (endGame.endGame)
         {
             Debug.Log("EndGame");
-            SceneManager.LoadScene("EndGame");
+            SceneManager.LoadScene("EndGame");           
         }
         else if (m_isGateOpen && nextLevel.StartNextLevel)
         {            
             Debug.Log("go to lv3");
-            SceneManager.LoadScene("Level_3");             
+            SceneManager.LoadScene("Level_3");
+            StopAllCoroutines();
         }
         else if (m_isGateOpen && !nextLevel.StartNextLevel)
         {
@@ -146,7 +164,7 @@ public class GameManager : MonoBehaviour
 
     private void GameisOn()
     {            
-        personController.isImmortal = false;
+        //personController.isImmortal = false;
         deathMotion.keepRagdolled = false;       
     }
 
@@ -184,5 +202,14 @@ public class GameManager : MonoBehaviour
                 break;
         }
         return position;
+    }
+
+    public void GameOver()
+    {
+        maze.SetActive(false);
+        Item.SetActive(false);
+        spacialZone.SetActive(false);
+        zombie.SetActive(false);
+        Mountain.SetActive(false);
     }
 }

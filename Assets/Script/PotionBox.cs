@@ -41,8 +41,8 @@ public class PotionBox: MonoBehaviour
             isTouch = true;
             Debug.Log("콰지직!");
             Destroy(boxCollider);
-            Destroy(box, 8);
-            
+            Destroy(box, 8);                      
+
             if (respawn)
             {
                 GetComponent<RespawnZombie>().enabled = false;
