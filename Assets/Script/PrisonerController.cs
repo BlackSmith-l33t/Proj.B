@@ -18,6 +18,7 @@ public class PrisonerController: MonoBehaviour
     public MountainOfStupid  mountain;
     public MountainStart     mountainStart;
     public EndGame           endGame;
+    public string[]          texts = { };
    
     public bool isAlive = true;
     public bool m_IsGround = false;
@@ -50,6 +51,7 @@ public class PrisonerController: MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        Debug.Log("OnCollisionEnter");
         if (defaultLayer == other.gameObject.layer)
         {            
             return;

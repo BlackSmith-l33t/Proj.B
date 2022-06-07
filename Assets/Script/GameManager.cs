@@ -160,13 +160,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine("StartFadeInOut");
             Debug.Log("You Die");            
         }
-    }
-
-    private void GameisOn()
-    {            
-        //personController.isImmortal = false;
-        deathMotion.keepRagdolled = false;       
-    }
+    } 
 
     private Transform SetRespawnPoint()
     {
@@ -202,6 +196,12 @@ public class GameManager : MonoBehaviour
                 break;
         }
         return position;
+    }
+
+    private void GameisOn()
+    {
+        deathMotion.keepRagdolled = false;
+        // TODO : 여기 들어오는 너희는 모든 희망을 버려라.
     }
 
     public void GameOver()
