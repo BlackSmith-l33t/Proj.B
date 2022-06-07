@@ -163,8 +163,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void GameisOn()
-    {            
-        //personController.isImmortal = false;
+    {                   
         deathMotion.keepRagdolled = false;       
     }
 
