@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffdcee159363c6e4e94822035bca692c, type: 3}
+  m_Name: HP_Potion
+  m_EditorClassIdentifier: 
+  name: HP_Potion
+  Description: Health Resilience
+  resilience: 100
+  prefab: {fileID: -2152162757573251233, guid: fd7d779f67a13c940afd2a4d08ad1a4d, type: 3}
