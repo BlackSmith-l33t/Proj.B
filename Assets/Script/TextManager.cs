@@ -12,31 +12,25 @@ public class TextManager : MonoBehaviour
     public Text   locationText;
     public Text   chatText;
     public Image  fadeOutImage;
-
-    bool isPlaying = false;
+    public bool isTextWorking = false;
 
     private void Awake()
     {        
         chatText.text = "";
     }
-    public void OnText()
+    public bool OnText()
     {
         StartCoroutine(ShowText());
+        return true;
     }
 
     IEnumerator ShowText()
-    {              
-        if (null ==chatText.text && isPlaying)
-        {
-            StopAllCoroutines();
-        }
-
+    {             
         // TODO : Text fade In Out
         //yield return new WaitForSeconds(0.2f);
 
         //Color fadeColor = fadeOutImage.color;
-        Color textColor = new Color(1, 1, 1, 0);
-        isPlaying = true;
+        //Color textColor = new Color(1, 1, 1, 0);      
 
         //for (int i = 0; i < 200; i++)
         //{
@@ -52,7 +46,7 @@ public class TextManager : MonoBehaviour
         //    yield return new WaitForSeconds(0.01f);
         //}
 
-        yield return new WaitForSeconds(6.0f);
+        yield return new WaitForSeconds(10.0f);
 
         //for (int i = 0; i < 100; i++)
         //{
@@ -68,17 +62,9 @@ public class TextManager : MonoBehaviour
         //    yield return new WaitForSeconds(0.01f);
         //}
 
-        Debug.Log("fade In out");
+        Debug.Log("글자 사라짐");
         chatText.text = null;
 
-        isPlaying = false;
-        StopAllCoroutines();
-    }
-
-    
-    
-
-
-
-
+        isTextWorking = true;
+    }  
 }
