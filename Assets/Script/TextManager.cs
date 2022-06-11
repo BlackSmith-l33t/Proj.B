@@ -7,16 +7,19 @@ using UnityEngine.Events;
 
 public class TextManager : MonoBehaviour
 {
-    //public static TextManager instance { get; private set; }
-   
+    //public static TextManager instance { get; set; }
+       
     public Text   locationText;
     public Text   chatText;
     public Image  fadeOutImage;
     public bool isTextWorking = false;
 
     private void Awake()
-    {        
+    {
+        //instance = this;
         chatText.text = "";
+        //instance.locationText = locationText;
+        //instance.chatText = chatText;
     }
     public bool OnText()
     {

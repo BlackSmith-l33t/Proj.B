@@ -16,7 +16,7 @@ public class TextBox : MonoBehaviour
     bool m_boxTriggerOn = false;
 
     private void Awake()
-    {
+    {        
         chatText = GetComponent<TextBox>().chatText;
         locationText = GetComponent<TextBox>().locationText;
         m_boxTriggerOn = textManager.isTextWorking;
@@ -40,6 +40,6 @@ public class TextBox : MonoBehaviour
             textManager.isTextWorking = false;
         }
 
-        Destroy(this, 7);
+        //Destroy(this, 10);
     } 
 }
