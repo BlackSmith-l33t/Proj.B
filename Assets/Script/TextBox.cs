@@ -13,6 +13,8 @@ public class TextBox : MonoBehaviour
     [Multiline(10)]
     public string chatText;
 
+    int DefaultLayer = 9;
+
     bool m_boxTriggerOn = false;
 
     private void Awake()
@@ -23,7 +25,12 @@ public class TextBox : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {        
+    {
+        if (DefaultLayer == other.gameObject.layer)
+        {
+            return;
+        }
+
         if (m_boxTriggerOn)
         {
             Debug.Log("textBox 작동 중");
