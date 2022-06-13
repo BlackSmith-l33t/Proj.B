@@ -18,8 +18,8 @@ public class WailOfStairs : MonoBehaviour
 
     private void Awake()
     {
-        chatText = GetComponent<TextBox>().chatText;
-        locationText = GetComponent<TextBox>().locationText;
+        chatText = GetComponent<WailOfStairs>().chatText;
+        locationText = GetComponent<WailOfStairs>().locationText;
         m_boxTriggerOn = textManager.isTextWorking;
     }
 

@@ -21,10 +21,10 @@ public class Portal : MonoBehaviour
             yield return new WaitForSeconds(0.01f);           
         }
 
-        SceneManager.LoadScene("Final");
+        SceneManager.LoadScene("Final Chapter");
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Finished");
         StartCoroutine(StartFadeOutWhite());       
