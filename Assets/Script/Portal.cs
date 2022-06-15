@@ -28,7 +28,5 @@ public class Portal : MonoBehaviour
     {
         Debug.Log("Finished");
         StartCoroutine(StartFadeOutWhite());       
-    }
-
-    
+    }    
 }
